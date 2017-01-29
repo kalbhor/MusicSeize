@@ -2,8 +2,6 @@ from flask import Flask, render_template, request, flash, \
                   url_for, send_file, after_this_request, redirect, \
                   session
 
-from datetime import timedelta
-
 from musictools.musicnow import MusicNow
 from musictools.MusicRepair import MusicRepair
 import os
@@ -60,13 +58,6 @@ def process():
 
 @app.route('/download/<path>/<song>/', methods=['POST','GET'])
 def download(path=None, song=None):
-    print(song)
-    print(path)
-    @after_this_request
-    def remove_file(response):
-        os.remove('tmp/'+path)
-        return response
-
     return send_file('tmp/'+path, as_attachment=True, attachment_filename=song+'.mp3')
 
 
