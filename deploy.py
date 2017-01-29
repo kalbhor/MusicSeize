@@ -18,15 +18,15 @@ app.secret_key = binascii.hexlify(os.urandom(24))
 
 def download_song(input_title, input_url):
     song = MusicNow()
-    song.download_song(input_url, input_title)
-    artist, album, song_title, error = MusicRepair.get_details_spotify(input_title + '.mp3')
-    album_src = MusicRepair.add_albumart(input_title + '.mp3', song_title)
-    MusicRepair.add_details(input_title + '.mp3', song_title, artist, album)
+    song.download_song(input_url, input_title, 'tmp/')
+    artist, album, song_title, error = MusicRepair.get_details_spotify('tmp/'+input_title + '.mp3')
+    album_src = MusicRepair.add_albumart('tmp/'+input_title + '.mp3', song_title)
+    MusicRepair.add_details('tmp/'+input_title + '.mp3', song_title, artist, album)
 
     result = {
     'artist': artist,
     'album' : album,
-    'song' : song_title,
+    'song' : song_title[4:],
     'art': album_src,
     }
 
@@ -58,10 +58,11 @@ def process():
 
 @app.route('/download/<path>/<song>/', methods=['POST', 'GET'])
 def download(path=None, song=None):
+    print(song)
+    print(path)
     @after_this_request
     def remove_file(response):
-        os.remove(path)
+        os.remove('tmp/'+path)
         return response
 
-    return send_file(path, as_attachment=True, attachment_filename=song+'.mp3')
-
+    return send_file('tmp/'+path, as_attachment=True, attachment_filename=song[4:]+'.mp3')
