@@ -13,10 +13,12 @@
     <br>
     <h2>Artist : {{ result['artist'] }}</h2>
     <br>
+    <p><a class="dribbble" href="{{ url_for('index') }}">Download another song</a></p>
+    <br>
     <img src="{{ result['art'] }}" style="max-height: 200px;" />
 <br>
 <h2>
-   <br><br>
+   <br>
   <center><a href="{{ url_for('download',path=path,song=song) }}" class="button button2">Download</a></center>
 </h2>	
 	</div>
