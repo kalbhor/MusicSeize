@@ -19,14 +19,16 @@ app.secret_key = binascii.hexlify(os.urandom(24))
 def download_song(input_title, input_url):
     song = MusicNow()
     song.download_song(input_url, input_title, 'tmp/')
-    artist, album, song_title, error = MusicRepair.get_details_spotify('tmp/'+input_title + '.mp3')
+    artist, album, song_title, error = MusicRepair.get_details_spotify(input_title)
+    print("input: " + input_title)
+    print("somg:" + song_title)
     album_src = MusicRepair.add_albumart('tmp/'+input_title + '.mp3', song_title)
     MusicRepair.add_details('tmp/'+input_title + '.mp3', song_title, artist, album)
 
     result = {
     'artist': artist,
     'album' : album,
-    'song' : song_title[4:],
+    'song' : song_title,
     'art': album_src,
     }
 
@@ -65,5 +67,8 @@ def download(path=None, song=None):
         os.remove('tmp/'+path)
         return response
 
-    return send_file('tmp/'+path, as_attachment=True, attachment_filename=song[4:]+'.mp3')
+    return send_file('tmp/'+path, as_attachment=True, attachment_filename=song+'.mp3')
+
+if __name__ == '__main__':
+    app.run()
 

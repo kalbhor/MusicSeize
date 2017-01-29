@@ -2,14 +2,11 @@ appdirs==1.4.0
 beautifulsoup4==4.5.3
 bs4==0.0.1
 click==6.7
-colorama==0.3.7
-configparser==3.5.0
 Flask==0.12
-gunicorn==19.6.0
 itsdangerous==0.24
 Jinja2==2.9.5
 MarkupSafe==0.23
-musictools==0.0.3
+musictools==0.0.6
 mutagen==1.36.2
 packaging==16.8
 pyparsing==2.1.10
