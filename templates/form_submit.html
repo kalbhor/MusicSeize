@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+	<div class="wrap">
+	<div class="animated fadeInLeft center">
+	<div id="container">
+<center><h1 class="home">MusicNow</h1></center>
+<br>
+<h2>
+	<form method="post" action="{{ url_for('songlist') }}" id="form1">
+    <input type="text" name="songname" placeholder="Search songs.." />
+    <br> <br>
+    <center><button class="button button2" type="submit" form="form1" value="Submit">Submit</button></center>
+    </form>	
+</h2>
+</div>
+	</div>
+{% endblock %}
+
+
+		
+	

@@ -1,0 +1,422 @@
+/*------------------------------------*\
+  CSS Reset
+\*------------------------------------*/
+
+
+* {
+  margin: 0;
+  padding: 0;
+  font-style: inherit;
+  cursor: default;
+  outline: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box; }
+
+
+/*------------------------------------*\
+ 	Highlight Seclections
+\*------------------------------------*/
+
+	::selection {
+		background: #666566;
+		color: #fff;
+		text-shadow: none; /* Safari */
+	}
+
+	::-moz-selection {
+		background: #666566;
+		color: #fff;
+		text-shadow: none; /* Firefox */
+	}
+
+
+/*------------------------------------*\
+  Document default
+\*------------------------------------*/
+
+body, html {
+  width: 100%;
+  height: 100%;
+background-color: #fff;
+  font-family: "Avenir Next", "Avenir", "Helvetica Neue", "Helvetica" sans-serif;
+	line-height:28px;
+	font-weight: normal;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+a, a:visited, a:hover {
+  color:  #6e737e;
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-transition: all 0.15s ease;
+  -moz-transition: all 0.15s ease;
+  -ms-transition: all 0.15s ease;
+  -o-transition: all 0.15s ease;
+  transition: all 0.15s ease;
+}
+
+.button {
+    background-color: #fff; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button2 {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #008CBA;
+}
+
+.button2:hover {
+    background-color: #008CBA;
+    color: white;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    font-size: 80%;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
+input[type=text]:focus {
+    border: 3px solid #c4c4c4;
+}
+
+ 
+div#loading {
+	display: none;
+}
+
+
+/*------------------------------------*\
+  Site box
+\*------------------------------------*/
+
+@-webkit-keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}
+        40% {-webkit-transform: translateY(-30px) rotate(-25deg);}
+        60% {-webkit-transform: translateY(-10px) rotate(20deg);}
+}
+
+@-moz-keyframes bounce {
+	    0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}
+      40% {-webkit-transform: translateY(-30px) rotate(-25deg);}
+      60% {-webkit-transform: translateY(-10px) rotate(20deg);}
+}
+
+@-o-keyframes bounce {
+	    0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}
+      40% {-webkit-transform: translateY(-30px) rotate(-25deg);}
+      60% {-webkit-transform: translateY(-10px) rotate(20deg);}
+}
+@keyframes bounce {
+	    0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}
+      40% {-webkit-transform: translateY(-30px) rotate(-25deg);}
+      60% {-webkit-transform: translateY(-10px) rotate(20deg);}
+}
+
+#container {
+	text-align: left;
+	max-width: 620px;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.wrap {
+	max-width: 620px;
+	width: 100%;
+	height: 100%;
+	margin: auto;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: flex;
+	-webkit-flex-direction: column;
+	-moz-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+}
+
+.center {
+  width: 100%;
+  margin: auto; }
+
+/*------------------------------------*\
+  Text Styles
+\*------------------------------------*/
+h1 {
+	text-align: center;
+	font-size: 30px;
+	font-family: "Avenir Next";
+	color: #373a40;
+	font-weight: bold;
+}
+h1.home {
+	text-align: center;
+	font-size: 60px;
+	font-family: "Avenir Next";
+	color: #373a40;
+	font-weight: bold;
+	font-style: italic;
+}
+
+h2 {
+	font-size: 24px;
+	font-family: "Avenir Next";
+	color: #6e737e;
+	text-align: left;
+	line-height: 34px;
+	font-weight: lighter;
+	}
+
+p {
+	font-size: 16px;
+	font-family: "Avenir Next";
+	font-weight: lighter;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a:visited  {
+	color: rgb(185, 185, 185);
+}
+
+a.glow {
+	color: #5a62d2;
+	font-weight: 600;
+	cursor: default;
+}
+
+a.nurture {
+	color: #6cba2d;
+	font-weight: 600;
+	cursor: default;
+}
+
+a.ruby {
+	color: #fe4444;
+	font-weight: 600;
+	cursor: default;
+}
+
+a:hover.glow {
+	color: #5a62d2;
+  border-bottom: 2px solid #5a62d2;
+}
+
+a:hover.nurture {
+	color: #6cba2d;
+  border-bottom: 2px solid #6cba2d;
+}
+
+a:hover.ruby {
+	color: #fe4444;
+  border-bottom: 2px solid #fe4444;
+}
+
+a:hover.email {
+	color: #ff532f;
+  border-bottom: 2px solid #ff532f;
+}
+
+a:hover.dribbble {
+	color: #ea4c89;
+  border-bottom: 2px solid #ea4c89;
+}
+
+a:hover.linkedin {
+	color: #006fa6;
+  border-bottom: 2px solid #006fa6;
+}
+
+
+/*------------------------------------*\
+  Rotating Words
+\*------------------------------------*/
+.rw-words {
+	width: 100%;
+	height: 100px;
+}
+.rw-words span{
+	position: absolute;
+	width: 100%;
+	opacity: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	-webkit-animation: rotateWordsFirst 13s linear infinite 0s;
+	-ms-animation: rotateWordsFirst 13s linear infinite 0s;
+	animation: rotateWordsFirst 13s linear infinite 0s;
+}
+.rw-words span:nth-child(2) { 
+    -webkit-animation-delay: 3s; 
+	-ms-animation-delay: 3s; 
+	animation-delay: 3s; 
+}
+.rw-words span:nth-child(3) { 
+    -webkit-animation-delay: 6s; 
+	-ms-animation-delay: 6s; 
+	animation-delay: 6s; 
+}
+.rw-words span:nth-child(4) { 
+    -webkit-animation-delay: 9s; 
+	-ms-animation-delay: 9s; 
+	animation-delay: 9s; 
+}
+/*.rw-words span:nth-child(5) {
+    -webkit-animation-delay: 12s;
+	-ms-animation-delay: 12s;
+	animation-delay: 12s;
+}*/
+/*.rw-words span:nth-child(6) {
+    -webkit-animation-delay: 15s;
+	-ms-animation-delay: 15s;
+	animation-delay: 15s; 
+}*/
+@-webkit-keyframes rotateWordsFirst {
+    0% { opacity: 0; -webkit-animation-timing-function: ease-in; width: 0px;}
+    5% { opacity: 1; -webkit-animation-timing-function: ease-out; width: 100%;}
+    17% { opacity: 1; }
+    20% { opacity: 0; }
+    100% { opacity: 0; }
+}
+@-ms-keyframes rotateWordsFirst {
+    0% { opacity: 0; -ms-animation-timing-function: ease-in; width: 0px;}
+    5% { opacity: 1; -ms-animation-timing-function: ease-out; width: 100%;}
+    17% { opacity: 1; }
+    20% { opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes rotateWordsFirst {
+    0% { opacity: 0; -webkit-animation-timing-function: ease-in; animation-timing-function: ease-in; width: 0px;}
+    5% { opacity: 1; -webkit-animation-timing-function: ease-out; animation-timing-function: ease-out; width: 100%;}
+    17% { opacity: 1; }
+    20% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+/*------------------------------------*\
+  Footer
+\*------------------------------------*/
+
+footer {
+	text-align: left;
+	max-width: 620px;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 12px;
+	left: 0;
+	right: 0;
+	-webkit-align-self: baseline;
+  -moz-align-self: baseline;
+  -ms-align-self: baseline;
+  align-self: baseline;
+  overflow: hidden;
+}
+
+ .mail {
+	display: none;
+}
+
+footer #left {
+	float: left;
+}
+
+footer #right {
+	float: right;
+}
+
+footer #right ul li {
+  display: inline-block;
+	margin-right: 10px;
+}
+
+footer #right ul li:last-child {
+	margin-right: 0px;
+}
+
+
+
+/*------------------------------------*\
+	Mobile
+\*------------------------------------*/
+
+@media all and (max-width: 680px) and (min-width: 320px){
+	.wrap {
+    width: auto;
+		margin-left: 30px;
+}
+  ul li .mail {
+		display: block;
+	}
+
+	p {
+		font-size: 28px;
+		font-weight: 200;
+		margin-bottom: 10px;
+		color: #6e737e;
+	}
+
+	h1 {
+		font-size: 38px;
+		font-weight: 400;
+	}
+
+	h2 {
+		line-height: 46px;
+		font-size: 30px;
+		font-weight: 200;
+		}
+
+	#footer {
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 12px;
+		left: 0;
+		right: 0;
+		margin-top: 44px;
+	}
+
+	footer #right {
+		float: left;
+		display: block;
+	}
+
+	footer #left {
+		display: none;
+	}
+
+	footer #right ul li {
+		display: block;
+		line-height: 38px;
+}

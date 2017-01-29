@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block content %}
+	<div class="wrap">
+	<div class="animated fadeInLeft center">
+	<div id="container">
+    <br>
+    <center><h1><u>Ready for download</u></h1></center>
+    <br>
+    <h2>Album : {{ result['album'] }}</h2>
+    <br>
+	<h2>Song : {{ result['song'] }}</h2>
+    <br>
+    <h2>Artist : {{ result['artist'] }}</h2>
+    <br>
+    <img src="{{ result['art'] }}" style="max-height: 200px;" />
+<br>
+<h2>
+   <br><br>
+  <center><a href="{{ url_for('download',path=path,song=song) }}" class="button button2">Download</a></center>
+</h2>	
+	</div>
+	</div>
+	</div>
+
+{% endblock %}
+
+
+

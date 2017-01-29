@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block javascript %}
+<script type="text/javascript">
+        function loading(){
+        	document.getElementById('loading').style.display = 'block';
+        	document.getElementById('content').style.display = 'none';
+        }
+</script>
+{% endblock %}
+
+{% block content %}
+    <div id="content">
+	<div class="wrap">
+	<div class="animated fadeInLeft center">
+	<div id="container">
+
+	<h1>Choose your song..</h1>
+<br>
+<h2>
+  <form method="post" action="{{ url_for('process') }}" id="form2">
+    {% for song in titles %}
+    	<input type="radio" name="title" value="{{ song }}"> {{song}} </input>
+    	<input type="hidden" name="url" value="{{ urls[loop.index] }}" />
+    	<br>
+    {% endfor %}
+    </form>
+   <br><br>
+  <center><button class="button button2" type="submit" form="form2" value="Submit" onclick="loading();">Stitch</button></center>
+</h2>	
+	</div>
+	</div>
+	</div>
+	</div>
+
+{% endblock %}
+
+{% block load %}
+    <div id="loading">
+    <br><br>
+	<h1> Please wait, while we stitch the song for you </h1>
+	<br>
+	<center><img src="{{ url_for('static',filename='images/loading.gif') }}" style="height:60px;"" /></center>
+</div>
+{% endblock %}
+

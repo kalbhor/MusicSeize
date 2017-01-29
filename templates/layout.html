@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>MusicNow</title>
+    {% block messages %}
+    {% endblock %}
+	<meta name="viewport" content="width=450, maximum-scale=1"/>
+    <link rel="shortcut icon" href="img/favicon.gif">
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+	{% block javascript %}
+
+	{% endblock %}
+  </head>
+  <body>
+    {% block content %}
+
+	{% endblock %}
+	<footer>
+		<div id="left">
+			<p>Built by: <a class="email" href="lakshaykalbhor.github.io">Lakshay Kalbhor</a></p>
+		</div>
+		<div id="right">
+			<ul>
+				<li><p><a class="dribbble" target="_blank" href="http://www.github.com/lakshaykalbhor">Github</a></p></li>
+				<li><p><a class="linkedin" target="_blank" href="https://www.twitter.com/lakshaykalbhor">Twitter</a></p></li>
+			</ul>
+		</div>
+	</footer>
+	{% block load %}
+	{% endblock %}
+  </body>
+</html>
