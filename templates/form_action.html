@@ -2,10 +2,15 @@
 
 {% block javascript %}
 <script>
-$(document).on('click touchstart', '#trigger', function() {
+if(!!('ontouchstart' in window)){
+    
+}
+else{
+$(document).on('click touchstart tap', '#trigger', function() {
     $("#content").hide();
     $("#loading").show();
 });
+}
 </script>
 
 

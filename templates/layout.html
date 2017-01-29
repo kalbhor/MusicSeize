@@ -4,11 +4,12 @@
     <title>MusicNow</title>
     {% block messages %}
     {% endblock %}
-	<meta name="viewport" content="width=450, maximum-scale=1"/>
-	<link rel="icon" href="data:;base64,=">
-    <link rel="shortcut icon" href="img/favicon.gif">
+	<!-- Include meta tag to ensure proper rendering and touch zooming -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Include the jQuery library -->
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
 	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	{% block javascript %}
 
 	{% endblock %}
