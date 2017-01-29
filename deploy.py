@@ -58,7 +58,7 @@ def process():
 
     return render_template('process.html', path=file_path, song=song_title, result=result)
 
-@app.route('/download/<path>/<song>/', methods=['POST'])
+@app.route('/download/<path>/<song>/', methods=['POST','GET'])
 def download(path=None, song=None):
     print(song)
     print(path)
@@ -68,7 +68,4 @@ def download(path=None, song=None):
         return response
 
     return send_file('tmp/'+path, as_attachment=True, attachment_filename=song+'.mp3')
-
-if __name__ == '__main__':
-    app.run()
 

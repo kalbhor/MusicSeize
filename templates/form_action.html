@@ -1,15 +1,16 @@
 {% extends "layout.html" %}
 
 {% block javascript %}
-<script type="text/javascript">
-        function loading(){
-        	document.getElementById('loading').style.display = 'block';
-        	document.getElementById('content').style.display = 'none';
-        }
+<script>
+$(document).on('click', '#trigger', function(e){ 
+        $("#content").hide();
+        $("#loading").show();
+});
 </script>
 {% endblock %}
 
 {% block content %}
+
     <div id="content">
 	<div class="wrap">
 	<div class="animated fadeInLeft center">
@@ -26,7 +27,8 @@
     {% endfor %}
     </form>
    <br><br>
-  <center><button class="button button2" type="submit" form="form2" value="Submit" onclick="loading();">Stitch</button></center>
+  <center><button id="trigger" class="button button2" type="submit" form="form2" value="Submit">Stitch</button></center>
+  </div>
 </h2>	
 	</div>
 	</div>
