@@ -50,7 +50,7 @@ def songlist():
     return render_template('form_action.html', titles=titles, urls=urls)
 
 
-@app.route('/process/', methods=['POST', 'GET'])
+@app.route('/process/', methods=['POST'])
 def process():
     input_title = request.form['title']
     input_url = request.form['url']
@@ -58,7 +58,7 @@ def process():
 
     return render_template('process.html', path=file_path, song=song_title, result=result)
 
-@app.route('/download/<path>/<song>/', methods=['POST', 'GET'])
+@app.route('/download/<path>/<song>/', methods=['POST'])
 def download(path=None, song=None):
     print(song)
     print(path)
