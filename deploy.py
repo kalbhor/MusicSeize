@@ -66,3 +66,4 @@ def download(path=None, song=None):
         return response
 
     return send_file('tmp/'+path, as_attachment=True, attachment_filename=song[4:]+'.mp3')
+
