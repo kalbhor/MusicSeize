@@ -2,11 +2,13 @@
 
 {% block javascript %}
 <script>
-$(document).on('click', '#trigger', function(e){ 
-        $("#content").hide();
-        $("#loading").show();
+$(document).on('click touchstart', '#trigger', function() {
+    $("#content").hide();
+    $("#loading").show();
 });
 </script>
+
+
 {% endblock %}
 
 {% block content %}
