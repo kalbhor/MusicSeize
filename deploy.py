@@ -4,7 +4,8 @@ from flask import Flask, render_template, request, flash, \
 
 from datetime import timedelta
 
-from lib.musicnow import MusicNow, Repair
+from musictools.musicnow import MusicNow
+from musictools.MusicRepair import MusicRepair
 import os
 import binascii
 from collections import OrderedDict
@@ -18,9 +19,9 @@ app.secret_key = binascii.hexlify(os.urandom(24))
 def download_song(input_title, input_url):
     song = MusicNow()
     song.download_song(input_url, input_title)
-    artist, album, song_title, error = Repair.get_details_spotify(input_title + '.mp3')
-    album_src = Repair.add_albumart(input_title + '.mp3', song_title)
-    Repair.add_details(input_title + '.mp3', song_title, artist, album)
+    artist, album, song_title, error = MusicRepair.get_details_spotify(input_title + '.mp3')
+    album_src = MusicRepair.add_albumart(input_title + '.mp3', song_title)
+    MusicRepair.add_details(input_title + '.mp3', song_title, artist, album)
 
     result = {
     'artist': artist,
