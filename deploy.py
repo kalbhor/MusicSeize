@@ -64,10 +64,6 @@ def process():
 
 @app.route('/download/<path>/<song>/', methods=['POST','GET'])
 def download(path=None, song=None):
-    @after_this_request
-    def remove_file(response):
-        os.remove('tmp/'+path)
-        return response
     return send_file('tmp/'+path, as_attachment=True, attachment_filename=song+'.mp3')
 
 if __name__=='__main__':
