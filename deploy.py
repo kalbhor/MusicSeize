@@ -4,6 +4,8 @@ from flask import Flask, render_template, request, flash, \
 
 from musictools.musicnow import MusicNow
 from musictools.MusicRepair import MusicRepair
+import sys
+import logging
 import os
 import binascii
 from collections import OrderedDict
@@ -13,6 +15,8 @@ from collections import OrderedDict
 # Initialize the Flask application
 app = Flask(__name__)
 app.secret_key = binascii.hexlify(os.urandom(24))
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
 
 def download_song(input_title, input_url):
     song = MusicNow()
@@ -62,7 +66,8 @@ def process():
 def download(path=None, song=None):
     @after_this_request
     def remove_file(response):
-        os.remove('tmp/')
+        os.remove('tmp/'+path)
+        return response
     return send_file('tmp/'+path, as_attachment=True, attachment_filename=song+'.mp3')
 
 if __name__=='__main__':
