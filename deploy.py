@@ -21,10 +21,10 @@ app.logger.setLevel(logging.ERROR)
 def download_song(input_title, input_url):
     song = MusicNow()
     song.download_song(input_url, input_title, 'tmp/')
-    artist, album, song_title, error = MusicRepair.get_details_spotify(input_title)
+    artist, album, song_title, albumart, error = MusicRepair.get_details_spotify(input_title)
     print("input: " + input_title)
     print("somg:" + song_title)
-    album_src = MusicRepair.add_albumart('tmp/'+input_title + '.mp3', song_title)
+    album_src = MusicRepair.add_albumart('tmp/'+input_title + '.mp3', song_title, albumart)
     MusicRepair.add_details('tmp/'+input_title + '.mp3', song_title, artist, album)
 
     result = {
