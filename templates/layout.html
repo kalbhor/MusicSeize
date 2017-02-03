@@ -29,12 +29,10 @@
 	{% endblock %}
 	<footer>
 		<div id="left">
-			<p>Built by: <a class="email" href="https://lakshaykalbhor.github.io/">Lakshay Kalbhor</a></p>
-		</div>
-		<div id="right">
-			<ul>
-				<li><p><a class="dribbble" target="_blank" href="http://www.github.com/lakshaykalbhor">Github</a></p></li>
-				<li><p><a class="linkedin" target="_blank" href="https://www.twitter.com/lakshaykalbhor">Twitter</a></p></li>
+			<ul style="list-style: none;">
+			    <li style="float: left;"><p><a class="ruby" href="{{ url_for('index') }}">Main</a>&nbsp;&nbsp;&nbsp;&nbsp;</p></li>
+                <li style="float: left;"><p><a class="ruby" href="{{ url_for('about') }}">About</a>&nbsp;&nbsp;&nbsp;&nbsp;</p></li>
+                <!-- <li style="float: left;"><p><a class="ruby" href="{{ url_for('about') }}">Feed</a>&nbsp;&nbsp;&nbsp;&nbsp;</p></li> -->
 			</ul>
 		</div>
 	</footer>

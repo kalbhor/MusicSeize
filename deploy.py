@@ -41,6 +41,9 @@ def download_song(input_title, input_url):
 def index():
     return render_template('form_submit.html')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
 @app.route('/songlist/', methods=['POST'])
 def songlist():
     song_name = request.form['songname']

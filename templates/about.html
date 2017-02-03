@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+	<div class="wrap">
+	<div class="animated fadeInLeft center">
+	<div id="container">
+    <br>
+    <center><h1><u>Info</u></h1></center>
+    <br>
+    <p style="font-weight: normal;"><strong>MusicNow</strong> collects music files from <strong>Youtube</strong> and relevant metadata from <strong>Spotify</strong> <br> and stitches them together to provide a premium .mp3 file.</p>
+    <br>
+    <p>
+    <strong>Stack : </strong> 
+    Python 3.6,
+    Flask,
+    Jinja,
+    Gunicorn,
+    Heroku
+    </p>
+    <br>
+    <p>MusicNow is under heavy construction and might be unstable right now. Report bugs <a href="mailto:lakshaykalbhor@gmail.com">@lakshaykalbhor</a></p>
+    <br>
+    <p>Built by: <a class="ruby" href="https://lakshaykalbhor.github.io/">Lakshay Kalbhor</a>
+    <a class="linkedin" target="_blank" href="https://www.twitter.com/lakshaykalbhor"><span><u>(Twitter)</u></span></a>
+    <a class="linkedin" target="_blank" href="http://www.github.com/lakshaykalbhor"><span><u>(Github)</u></span></a></p>
+    <br>
+    <center><p><a class="ruby" href="{{ url_for('index') }}">Back to main page</a></p></center>
+    <br>
+	</div>
+	</div>
+	</div>
+
+{% endblock %}
+
+
+
