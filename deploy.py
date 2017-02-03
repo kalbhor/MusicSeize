@@ -10,8 +10,6 @@ import os
 import binascii
 from collections import OrderedDict
 
-
-
 # Initialize the Flask application
 app = Flask(__name__)
 app.secret_key = binascii.hexlify(os.urandom(24))
@@ -44,6 +42,7 @@ def index():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
 @app.route('/songlist/', methods=['POST'])
 def songlist():
     song_name = request.form['songname']
@@ -67,6 +66,14 @@ def process():
 
 @app.route('/download/<path>/<song>/', methods=['POST','GET'])
 def download(path=None, song=None):
+    @after_this_request
+    def delete_file(response):
+        try:
+            os.remove(os.path.join('tmp','{}'.format(path)))
+        except Exception as e:
+            print(e)
+        return response
+
     return send_file('tmp/'+path, as_attachment=True, attachment_filename=song+'.mp3')
 
 if __name__=='__main__':
