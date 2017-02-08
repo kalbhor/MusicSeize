@@ -1,14 +1,11 @@
-from flask import Flask, render_template, request, flash, \
-                  url_for, send_file, after_this_request, redirect, \
-                  session
-
-from musictools.musicnow import MusicNow
-from musictools.MusicRepair import MusicRepair
 import sys
 import logging
 import os
 import binascii
-from collections import OrderedDict
+from musictools.MusicNow import MusicNow
+from musictools.MusicRepair import MusicRepair
+from flask import Flask, render_template, request, \
+                  url_for, send_file, after_this_request
 
 # Initialize the Flask application
 app = Flask(__name__)
@@ -18,7 +15,7 @@ app.logger.setLevel(logging.ERROR)
 
 def download_song(input_title, input_url):
     song = MusicNow()
-    song.download_song(input_url, input_title, 'tmp/')
+    song.download_song(input_url, input_title, location = 'tmp/')
     artist, album, song_title, albumart, error = MusicRepair.get_details_spotify(input_title)
     print("input: " + input_title)
     print("somg:" + song_title)
