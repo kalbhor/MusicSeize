@@ -14,6 +14,13 @@ app.logger.addHandler(logging.StreamHandler(sys.stdout))
 app.logger.setLevel(logging.ERROR)
 
 def download_song(input_title, input_url):
+    """
+    Method to use musictools to download song
+    and add metadata, return details about song
+    to display on webpage
+
+    'tmp/' is a location where heroku allows storage for a while
+    """
     song = MusicNow()
     song.download_song(input_url, input_title, location = 'tmp/')
     artist, album, song_title, albumart, error = MusicRepair.get_details_spotify(input_title)
@@ -45,8 +52,8 @@ def songlist():
     song_name = request.form['songname']
     song = MusicNow()
     youtube_list = song.get_url(song_name)
-    titles = list(youtube_list.keys())[:7]
-    urls = list(youtube_list.values())[:7]
+    titles = list(youtube_list.keys())
+    urls = list(youtube_list.values())
 
     return render_template('form_action.html', titles=titles, urls=urls)
 
