@@ -7,7 +7,7 @@ gunicorn==19.6.0
 itsdangerous==0.24
 Jinja2==2.9.5
 MarkupSafe==0.23
-musictools==1.0.5
+musictools==1.0.6
 mutagen==1.36.2
 packaging==16.8
 pyparsing==2.1.10
@@ -15,4 +15,4 @@ requests==2.13.0
 six==1.10.0
 spotipy==2.4.4
 Werkzeug==0.11.15
-youtube-dl==2017.2.7
+youtube-dl==2017.2.11

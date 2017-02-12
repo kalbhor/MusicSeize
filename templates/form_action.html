@@ -27,9 +27,9 @@ $(document).on('click touchstart tap', '#trigger', function() {
 <br>
 <h2>
   <form method="post" action="{{ url_for('process') }}" id="form2">
-    {% for song in titles %}
+    {% for url,song in youtube_list %}
     	<input type="radio" name="title" value="{{ song }}"> {{song}} </input>
-    	<input type="hidden" name="url" value="{{ urls[loop.index] }}" />
+    	<input type="hidden" name="url" value="{{ url }}" />
     	<br>
     {% endfor %}
     </form>
