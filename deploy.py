@@ -109,7 +109,7 @@ def download(path=None, song=None):
             print(e)
         return response
 
-    return send_file('tmp/'+path, as_attachment=True, attachment_filename=song+'.mp3')
+    return send_file('tmp/'+path, as_attachment=True, attachment_filename=str(song+'.mp3'))
 
 
 if __name__=='__main__':
