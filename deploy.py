@@ -76,7 +76,7 @@ def songlist():
     song_name = request.form['songname']
     song = MusicNow()
     youtube_list = song.get_url(song_name) # youtube_list is an ordered dict
-    return render_template('form_action.html', youtube_list=youtube_list)
+    return render_template('form_action.html', youtube_list=youtube_list[:10])
 
 
 @app.route('/process/', methods=['POST'])
