@@ -14,8 +14,7 @@ import sys
 import logging
 import os
 import binascii
-from musictools.MusicNow import MusicNow
-from musictools.MusicRepair import MusicRepair
+from musictools import musictools
 from flask import Flask, render_template, request, \
                   url_for, send_file, after_this_request
 
@@ -34,11 +33,10 @@ def download_song(input_title, input_url):
     'tmp/' is a location where heroku allows storage for a single request.
     (tmp cannot be used for permanent storage)
     """
-    song = MusicNow()
-    song.download_song(input_url, input_title, location = 'tmp/')
-    artist, album, song_title, albumart, error = MusicRepair.get_details_spotify(input_title)
-    album_src = MusicRepair.add_albumart('tmp/'+input_title + '.mp3', song_title, albumart)
-    MusicRepair.add_details('tmp/'+input_title + '.mp3', song_title, artist, album)
+    musictools.download_song(input_url, input_title, location = 'tmp/')
+    artist, album, song_title, albumart, error = musictools.get_details(input_title)
+    album_src = musictools.add_albumart('tmp/'+input_title + '.mp3', song_title, albumart)
+    musictools.add_details('tmp/'+input_title + '.mp3', song_title, artist, album)
 
     result = {
     'artist': artist,
@@ -70,12 +68,11 @@ def about():
 def songlist():
     """
     Searches query on youtube.com and displays on webpage.
-    Uses MusicNow from MusicTools. Music titles are represented 
-    as radio buttons allowing the user to choose 1 song to download
+    Music titles are represented as radio buttons allowing 
+    the user to choose 1 song to download.
     """
     song_name = request.form['songname']
-    song = MusicNow()
-    youtube_list = song.get_url(song_name) # youtube_list is an ordered dict
+    youtube_list = musictools.get_song_url(song_name) # youtube_list is an ordered dict
     return render_template('form_action.html', youtube_list=youtube_list[:10])
 
 
