@@ -33,10 +33,10 @@ def download_song(input_title, input_url):
     'tmp/' is a location where heroku allows storage for a single request.
     (tmp cannot be used for permanent storage)
     """
-    musictools.download_song(input_url, input_title, location = 'tmp/')
-    artist, album, song_title, albumart, error = musictools.get_details(input_title)
-    album_src = musictools.add_albumart('tmp/'+input_title + '.mp3', song_title, albumart)
-    musictools.add_details('tmp/'+input_title + '.mp3', song_title, artist, album)
+    musictools.download_song(input_url, input_title, dl_directory = 'tmp/')
+    artist, album, song_title, albumart = musictools.get_metadata(input_title)
+    album_src = musictools.add_albumart(input_title + '.mp3', song_title, albumart)
+    musictools.add_metadata(input_title + '.mp3', song_title, artist, album)
 
     result = {
     'artist': artist,
@@ -72,7 +72,7 @@ def songlist():
     the user to choose 1 song to download.
     """
     song_name = request.form['songname']
-    youtube_list = musictools.get_song_url(song_name) # youtube_list is an ordered dict
+    youtube_list = musictools.get_song_urls(song_name) # youtube_list is an ordered dict
     return render_template('form_action.html', youtube_list=youtube_list[:10])
 
 
@@ -110,6 +110,5 @@ def download(path=None, song=None):
 
 
 if __name__=='__main__':
-    app.run() # For locally running the application
-
+    app.run(debug=True) # For locally running the application
 
