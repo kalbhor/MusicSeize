@@ -73,7 +73,7 @@ def songlist():
     """
     song_name = request.form['songname']
     youtube_list = musictools.get_song_urls(song_name) # youtube_list is an ordered dict
-    return render_template('form_action.html', youtube_list=youtube_list[:10])
+    return render_template('form_action.html', youtube_list=youtube_list[:5])
 
 
 @app.route('/process/', methods=['POST'])

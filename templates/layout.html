@@ -27,16 +27,9 @@
     {% block content %}
 
 	{% endblock %}
-	<footer>
-		<div id="left">
-			<ul style="list-style: none;">
-			    <li style="float: left;"><p><a class="ruby" href="{{ url_for('index') }}">Main</a>&nbsp;&nbsp;&nbsp;&nbsp;</p></li>
-                <li style="float: left;"><p><a class="ruby" href="{{ url_for('about') }}">About</a>&nbsp;&nbsp;&nbsp;&nbsp;</p></li>
-                <!-- <li style="float: left;"><p><a class="ruby" href="{{ url_for('about') }}">Feed</a>&nbsp;&nbsp;&nbsp;&nbsp;</p></li> -->
-			</ul>
-		</div>
-	</footer>
+
 	{% block load %}
+	
 	{% endblock %}
   </body>
 </html>

@@ -22,20 +22,19 @@ $(document).on('click touchstart tap', '#trigger', function() {
 <div class="wrap">
 	<div class="animated fadeInLeft center">
 	<div id="container">
-
-	<h1>Choose your song..</h1>
-<br>
+  <br><h1>Choose your song..</h1><br><br>
 
   <form method="post" action="{{ url_for('process') }}" id="form2">
     {% for url,song in youtube_list %}
     	<h2><input type="radio" name="title" value="{{ song }}">{{' ' + song}}</input></h2>
     	<input type="hidden" name="url" value="{{ url }}" />
-      <iframe width="250" height="32" src="{{ url.replace('watch?v=','embed/') }}?modestbranding=1&autohide=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+      <!--<iframe width="250" height="32" src="{{ url.replace('watch?v=','embed/') }}?modestbranding=1&autohide=1&showinfo=0" frameborder="0" allowfullscreen></iframe> -->
       <br> <hr /> <br>
    {% endfor %}
   </form>
    <br><br>
   <center><button id="trigger" class="button button2" type="submit" form="form2" value="Submit">Process!</button></center>
+   <br><br>
   </div>	
 	</div>
 	</div>
@@ -48,6 +47,7 @@ $(document).on('click touchstart tap', '#trigger', function() {
     <div id="loading">
     <br><br>
 	<h1> Please wait, stitching the song..</h1>
+  <h2>music file from Youtube + Metadata from Spotify
 	<br>
 	<center><img src="{{ url_for('static',filename='images/loading.gif') }}" style="height:60px;"" /></center>
 </div>
