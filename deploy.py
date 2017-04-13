@@ -30,7 +30,7 @@ app = Flask(__name__)
 app.secret_key = binascii.hexlify(os.urandom(24))
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
 app.logger.setLevel(logging.ERROR)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/counter.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL'] 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
