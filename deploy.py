@@ -59,13 +59,7 @@ def index():
     Home page, with a form that accepts song name as query
     and searches song on youtube.com
     """
-    v = Visit.query.first()
-    if not v:
-        v = Visit()
-        v.count += 1
-        db.session.add(v)
-    v.count +=1
-    db.session.commit() # To fetch count; hint : see download()
+    v = Visit.query.first() # To fetch count; hint : see download()
 
     return render_template('index.html', count=v.count)
 
