@@ -60,9 +60,12 @@ def index():
     and searches song on youtube.com
     """
     v = Visit.query.first()
-    v.count += 1             # Increment number of downloaded songs
-    db.session.commit()
-    #v = Visit.query.first() # To fetch count; hint : see download()
+    if not v:
+        v = Visit()
+        v.count += 1
+        db.session.add(v)
+    v.count +=1
+    db.session.commit() # To fetch count; hint : see download()
 
     return render_template('index.html', count=v.count)
 
