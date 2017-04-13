@@ -59,8 +59,10 @@ def index():
     Home page, with a form that accepts song name as query
     and searches song on youtube.com
     """
-
-    v = Visit.query.first() # To fetch count; hint : see download()
+    v = Visit.query.first()
+    v.count += 1             # Increment number of downloaded songs
+    db.session.commit()
+    #v = Visit.query.first() # To fetch count; hint : see download()
 
     return render_template('index.html', count=v.count)
 
