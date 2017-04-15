@@ -23,8 +23,11 @@
 <br>
 <div id="left">
 <p>Downloads till date : <b>{{ count }}</b></p>
+{% if song_name %}
 <p>Last song downloaded : <b>{{ song_name }}</b></p>
-<p>Attention : musicnow.herokuapp.com will no longer be this site's domain, we're switching to musicseize.com</p>
+{% endif %}
+<br>
+<p><b>Attention</b> : musicnow.herokuapp.com is changing it's name to  musicseize.com soon</p>
 <br>
 <p>Would you like to contribute towards building this site? UI/UX help needed. Contact <a href="mailto:lakshaykalbhor@gmail.com">lakshaykalbhor</a></p>
 </div>

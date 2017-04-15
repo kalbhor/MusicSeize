@@ -94,11 +94,6 @@ def process():
     input_url = request.form['url']
     file_path, song_title, result = download_song(input_title, input_url)
 
-    v = Visit.query.first()
-    v.count += 1             # Increment number of downloaded songs
-    v.song_name = str(song_title) 
-    db.session.commit()
-
 
     return render_template('process.html', path=file_path, song=song_title, result=result)
 
@@ -113,10 +108,10 @@ def download(path=None, song=None):
 
     @after_this_request # Delete music file after request
     def delete_file(response):
-        os.remove(os.path.join('tmp', '{}'.format(path)))
+        os.remove(os.path.join('tmp', path))
         return response
 
-    return send_file('tmp/'+path, as_attachment=True, attachment_filename=str(song+'.mp3'))
+    return send_file(os.path.join('tmp',path), as_attachment=True, attachment_filename=str(song+'.mp3'))
 
 
 @app.route('/about')
@@ -154,6 +149,12 @@ def download_song(input_title, input_url):
         'song' : song_title,
         'art': album_src,
     } # Details to display on webpage
+
+    v = Visit.query.first()
+    v.count += 1             # Increment number of downloaded songs
+    v.song_name = '{} - {}'.format(artist, song_title) 
+    db.session.commit()
+
 
     return input_title + '.mp3', song_title, result
 
