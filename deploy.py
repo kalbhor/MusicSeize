@@ -10,11 +10,10 @@ spotify requests are handled by spotipy
 youtube downloading is handled by youtube-dl
 
 Tests for this flask app are mostly trivial (I know testing is important)
-Since anything that can go wong, will go wrong with the musictools, it is
-tested.
+musictools is the core application and it is tested.
 
 I am very sorry for the pathetic html code in the templates. I'm not a 
-html guy.
+frontend person.
 """
 
 import sys
@@ -36,7 +35,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
 ##########################################################################
-############ Database for counting number of hits ########################
+############################# Database ###################################
 ##########################################################################
 
 db = SQLAlchemy(app)
@@ -44,6 +43,7 @@ db = SQLAlchemy(app)
 class Visit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     count = db.Column(db.Integer)
+    song_name = db.Column(db.String)
 
     def __init__(self):
         self.count = 0
@@ -59,9 +59,10 @@ def index():
     Home page, with a form that accepts song name as query
     and searches song on youtube.com
     """
-    v = Visit.query.first() # To fetch count; hint : see download()
 
-    return render_template('index.html', count=v.count)
+    v = Visit.query.first()
+
+    return render_template('index.html', count=v.count, song_name=v.song_name)
 
 
 @app.route('/songlist/', methods=['POST'])
@@ -86,16 +87,18 @@ def process():
     and metadata extraction & attaching.
     """
 
-    v = Visit.query.first()
-    v.count += 1             # Increment number of downloaded songs
-    db.session.commit()
-
     if not os.path.exists('/tmp'):
         os.mkdir('/tmp')
 
     input_title = request.form['title']
     input_url = request.form['url']
     file_path, song_title, result = download_song(input_title, input_url)
+
+    v = Visit.query.first()
+    v.count += 1             # Increment number of downloaded songs
+    v.song_name = str(song_title) 
+    db.session.commit()
+
 
     return render_template('process.html', path=file_path, song=song_title, result=result)
 
