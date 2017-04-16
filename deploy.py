@@ -25,6 +25,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, \
                   url_for, send_file, after_this_request
 from logging import StreamHandler
+from multiprocessing import Process
 
 file_handler = StreamHandler()
 file_handler.setLevel(logging.WARNING)
@@ -150,8 +151,11 @@ def download_song(input_title, input_url):
     (tmp cannot be used for permanent storage)
     """
 
-    musictools.download_song(input_url, input_title, dl_directory='tmp/')
-    artist, album, song_title, albumart = musictools.get_metadata(input_title)
+    p1 = Process(musictools.download_song,args=(input_url, input_title, 'tmp/',)
+    p2 = Process(musictools.get_metadata, args=(input_title,))
+    p1.join()
+    p2.join()
+    artist, album, song_title, albumart = p2.get()
     album_src = musictools.add_albumart(input_title + '.mp3', song_title, albumart)
     musictools.add_metadata(input_title + '.mp3', song_title, artist, album)
 
