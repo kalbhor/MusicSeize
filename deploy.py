@@ -21,7 +21,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, \
                   url_for, send_file, after_this_request
 from logging import StreamHandler
-from multiprocessing import Process
+from multiprocessing.pool import ThreadPool
 
 file_handler = StreamHandler()
 file_handler.setLevel(logging.WARNING)
@@ -145,26 +145,24 @@ def download_song(input_title, input_url):
     'tmp/' is a location where heroku allows storage for a single request.
     (tmp cannot be used for permanent storage)
     """
-    
-    p1 = Process(target=musictools.download_song,args=(input_url, input_title), kwargs={'dl_directory':'tmp/'})
-    p2 = Process(target=musictools.get_metadata, args=(input_title,))
+    pool = ThreadPool(processes=1)
+    p1 = pool.apply_async(target=musictools.download_song,args=(input_url, input_title), kwargs={'dl_directory':'tmp/'})
     p1.start()
+    p2 = pool.apply_async(target=musictools.get_metadata, args=(input_title,))
     p2.start()
-    p1.join()
-    p2.join()
-    artist, album, song_title, albumart = p2.values()
-    p1.close()
-    p2.close()
 
-    p1 = Process(target=musictools.add_albumart, args=(input_title + '.mp3', song_title, albumart))
-    p2 = Process(target=musictools.add_metadata, args=(input_title + '.mp3', song_title, artist, album))
-    p1.start()
-    p2.start()
     p1.join()
     p2.join()
-    album_src = p1.values()
-    p1.close()
-    p2.close()
+    artist, album, song_title, albumart = p2.get()
+
+    p3 = pool.apply_async(target=musictools.add_albumart, args=(input_title + '.mp3', song_title, albumart))
+    p3.start()
+    p4 = pool.apply_async(target=musictools.add_metadata, args=(input_title + '.mp3', song_title, artist, album))
+    p4.start()
+    p3.join()
+    p4.join()
+    album_src = p3.get()
+
 
     result = {
         'artist': artist,
