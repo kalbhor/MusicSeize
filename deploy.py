@@ -21,7 +21,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, \
                   url_for, send_file, after_this_request
 from logging import StreamHandler
-from multiprocessing.pool import ThreadPool
 
 file_handler = StreamHandler()
 file_handler.setLevel(logging.WARNING)
@@ -85,27 +84,19 @@ def process():
     and call download_song method to handle downloading
     and metadata extraction & attaching.
     """
-
+    print('Started process')
+    sys.stdout.flush()
     if not os.path.exists('/tmp'):
         os.mkdir('/tmp')
 
     input_title = request.form['title']
     input_url = request.form['url']
-    file_path, result = download_song(input_title, input_url)
-
-    @after_this_request
-    def write_to_db(response):
-        v = Visit.query.first()
-        v.count += 1             # Increment number of downloaded songs
-        v.song_name = '{} - {}'.format(result['artist'], result['song'])
-        db.session.commit()
-
-        return response
+    file_path, song_title, result = download_song(input_title, input_url)
+    print('Finished process')
+    sys.stdout.flush()
 
 
-
-
-    return render_template('process.html', path=file_path, result=result)
+    return render_template('process.html', path=file_path, song=song_title, result=result)
 
 
 @app.route('/download/<path>/<song>/', methods=['POST', 'GET'])
@@ -145,28 +136,19 @@ def download_song(input_title, input_url):
     'tmp/' is a location where heroku allows storage for a single request.
     (tmp cannot be used for permanent storage)
     """
-    pool = ThreadPool(processes=1)
-    args=(input_url, input_title)
-    kwargs={'dl_directory':'tmp/'}
-    p1 = pool.apply_async(musictools.download_song,args, kwargs)
-    p1.start()
-    args=(input_title,)
-    p2 = pool.apply_async(musictools.get_metadata, args)
-    p2.start()
 
-    p1.join()
-    p2.join()
-    artist, album, song_title, albumart = p2.get()
-    args=(input_title + '.mp3', song_title, albumart)
-    p3 = pool.apply_async(musictools.add_albumart, args)
-    p3.start()
-    args=(input_title + '.mp3', song_title, artist, album)
-    p4 = pool.apply_async(musictools.add_metadata, args)
-    p4.start()
-    p3.join()
-    p4.join()
-    album_src = p3.get()
-
+    musictools.download_song(input_url, input_title, dl_directory='tmp/')
+    print('Song Downloaded')
+    sys.stdout.flush()
+    artist, album, song_title, albumart = musictools.get_metadata(input_title)
+    print('Fetched Metadata')
+    sys.stdout.flush()
+    album_src = musictools.add_albumart(input_title + '.mp3', song_title, albumart)
+    print('Added album art')
+    sys.stdout.flush()
+    musictools.add_metadata(input_title + '.mp3', song_title, artist, album)
+    print('Added metadata')
+    sys.stdout.flush()
 
     result = {
         'artist': artist,
@@ -175,8 +157,15 @@ def download_song(input_title, input_url):
         'art': album_src,
     } # Details to display on webpage
 
+    v = Visit.query.first()
+    v.count += 1             # Increment number of downloaded songs
+    v.song_name = '{} - {}'.format(artist, song_title) 
+    db.session.commit()
+    print('Writing to DB')
+    sys.stdout.flush()
 
-    return input_title + '.mp3', result
+
+    return input_title + '.mp3', song_title, result
 
 
 if __name__ == '__main__':
