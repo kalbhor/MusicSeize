@@ -24,11 +24,13 @@ from musictools import musictools
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, \
                   url_for, send_file, after_this_request
+from logging import StreamHandler
 
+file_handler = StreamHandler()
+file_handler.setLevel(logging.WARNING)
 app = Flask(__name__)
 app.secret_key = binascii.hexlify(os.urandom(24))
-app.logger.addHandler(logging.StreamHandler(sys.stdout))
-app.logger.setLevel(logging.ERROR)
+app.logger.addHandler(file_handler)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL'] 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -138,13 +140,13 @@ def download_song(input_title, input_url):
     """
 
     musictools.download_song(input_url, input_title, dl_directory='tmp/')
-    app.logger.info('Song Downloaded')
+    app.logger('Song Downloaded')
     artist, album, song_title, albumart = musictools.get_metadata(input_title)
-    app.logger.info('Fetched Metadata')
+    app.logger('Fetched Metadata')
     album_src = musictools.add_albumart(input_title + '.mp3', song_title, albumart)
-    app.logger.info('Added album art')
+    app.logger('Added album art')
     musictools.add_metadata(input_title + '.mp3', song_title, artist, album)
-    app.logger.info('Added metadata')
+    app.logger('Added metadata')
 
     result = {
         'artist': artist,
