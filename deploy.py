@@ -25,7 +25,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, \
                   url_for, send_file, after_this_request
 from logging import StreamHandler
-from multiprocessing import Pool
+from multiprocessing import Process
 
 file_handler = StreamHandler()
 file_handler.setLevel(logging.WARNING)
@@ -151,12 +151,21 @@ def download_song(input_title, input_url):
     (tmp cannot be used for permanent storage)
     """
     
-    pool = Pool()
-    p1 = pool.apply_async(musictools.download_song,args=(input_url, input_title), kwds={'dl_directory':'tmp/'})
-    p2 = pool.apply_async(musictools.get_metadata, args=(input_title,))
-    artist, album, song_title, albumart = p2.get(timeout=20)
-    album_src = musictools.add_albumart(input_title + '.mp3', song_title, albumart)
-    musictools.add_metadata(input_title + '.mp3', song_title, artist, album)
+    p1 = Process(target=musictools.download_song,args=(input_url, input_title), kwds={'dl_directory':'tmp/'})
+    p2 = Process(target=musictools.get_metadata, args=(input_title,))
+    p1.join()
+    p2.join()
+    artist, album, song_title, albumart = p2.get()
+    p1.close()
+    p2.close()
+
+    p1 = Process(target=musictools.add_albumart, args=(input_title + '.mp3', song_title, albumart))
+    p2 = Process(target=musictools.add_metadata, args=(input_title + '.mp3', song_title, artist, album))
+    p1.join()
+    p2.join()
+    album_src = p1.get()
+    p1.close()
+    p2.close()
 
     result = {
         'artist': artist,
