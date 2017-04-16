@@ -151,7 +151,7 @@ def download_song(input_title, input_url):
     (tmp cannot be used for permanent storage)
     """
 
-    p1 = Process(musictools.download_song,args=(input_url, input_title, 'tmp/',)
+    p1 = Process(musictools.download_song,args=(input_url, input_title, 'tmp/',))
     p2 = Process(musictools.get_metadata, args=(input_title,))
     p1.join()
     p2.join()
