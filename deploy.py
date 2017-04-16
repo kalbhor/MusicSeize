@@ -140,13 +140,17 @@ def download_song(input_title, input_url):
     """
 
     musictools.download_song(input_url, input_title, dl_directory='tmp/')
-    app.logger('Song Downloaded')
+    print('Song Downloaded')
+    sys.stdout.flush()
     artist, album, song_title, albumart = musictools.get_metadata(input_title)
-    app.logger('Fetched Metadata')
+    print('Fetched Metadata')
+    sys.stdout.flush()
     album_src = musictools.add_albumart(input_title + '.mp3', song_title, albumart)
-    app.logger('Added album art')
+    print('Added album art')
+    sys.stdout.flush()
     musictools.add_metadata(input_title + '.mp3', song_title, artist, album)
-    app.logger('Added metadata')
+    print('Added metadata')
+    sys.stdout.flush()
 
     result = {
         'artist': artist,
