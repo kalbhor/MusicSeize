@@ -146,18 +146,22 @@ def download_song(input_title, input_url):
     (tmp cannot be used for permanent storage)
     """
     pool = ThreadPool(processes=1)
-    p1 = pool.apply_async(musictools.download_song,args=(input_url, input_title), kwargs={'dl_directory':'tmp/'})
+    args=(input_url, input_title)
+    kwargs={'dl_directory':'tmp/'}
+    p1 = pool.apply_async(musictools.download_song,args, kwargs)
     p1.start()
-    p2 = pool.apply_async(musictools.get_metadata, args=(input_title,))
+    args=(input_title,)
+    p2 = pool.apply_async(musictools.get_metadata, args)
     p2.start()
 
     p1.join()
     p2.join()
     artist, album, song_title, albumart = p2.get()
-
-    p3 = pool.apply_async(musictools.add_albumart, args=(input_title + '.mp3', song_title, albumart))
+    args=(input_title + '.mp3', song_title, albumart)
+    p3 = pool.apply_async(musictools.add_albumart, args)
     p3.start()
-    p4 = pool.apply_async(musictools.add_metadata, args=(input_title + '.mp3', song_title, artist, album))
+    args=(input_title + '.mp3', song_title, artist, album)
+    p4 = pool.apply_async(musictools.add_metadata, args)
     p4.start()
     p3.join()
     p4.join()
