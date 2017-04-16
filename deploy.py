@@ -1,17 +1,13 @@
 """
 A simple flask application built for a webapp that provides
 .mp3 files with metadata.
-
 The heart of this webapp is based on musictools - A library specifically
 built for this webapp. Musictools handles downloading the music from youtube
 and handles metadata by searching from spotify and attaching using mutagen.
-
 spotify requests are handled by spotipy
 youtube downloading is handled by youtube-dl
-
 Tests for this flask app are mostly trivial (I know testing is important)
 musictools is the core application and it is tested.
-
 I am very sorry for the pathetic html code in the templates. I'm not a 
 frontend person.
 """
@@ -25,6 +21,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, \
                   url_for, send_file, after_this_request
 from logging import StreamHandler
+from multiprocessing import Process
 
 file_handler = StreamHandler()
 file_handler.setLevel(logging.WARNING)
@@ -94,10 +91,21 @@ def process():
 
     input_title = request.form['title']
     input_url = request.form['url']
-    file_path, song_title, result = download_song(input_title, input_url)
+    file_path, result = download_song(input_title, input_url)
+
+    @after_this_request
+    def write_to_db(response):
+        v = Visit.query.first()
+        v.count += 1             # Increment number of downloaded songs
+        v.song_name = '{} - {}'.format(result['artist'], result['song'])
+        db.session.commit()
+
+        return response
 
 
-    return render_template('process.html', path=file_path, song=song_title, result=result)
+
+
+    return render_template('process.html', path=file_path, result=result)
 
 
 @app.route('/download/<path>/<song>/', methods=['POST', 'GET'])
@@ -134,23 +142,25 @@ def download_song(input_title, input_url):
     Method to use musictools to download song
     and add metadata, return details about song
     to display on webpage
-
     'tmp/' is a location where heroku allows storage for a single request.
     (tmp cannot be used for permanent storage)
     """
+    
+    p1 = Process(target=musictools.download_song,args=(input_url, input_title), kwds={'dl_directory':'tmp/'})
+    p2 = Process(target=musictools.get_metadata, args=(input_title,))
+    p1.join()
+    p2.join()
+    artist, album, song_title, albumart = p2.get()
+    p1.close()
+    p2.close()
 
-    musictools.download_song(input_url, input_title, dl_directory='tmp/')
-    print('Song Downloaded')
-    sys.stdout.flush()
-    artist, album, song_title, albumart = musictools.get_metadata(input_title)
-    print('Fetched Metadata')
-    sys.stdout.flush()
-    album_src = musictools.add_albumart(input_title + '.mp3', song_title, albumart)
-    print('Added album art')
-    sys.stdout.flush()
-    musictools.add_metadata(input_title + '.mp3', song_title, artist, album)
-    print('Added metadata')
-    sys.stdout.flush()
+    p1 = Process(target=musictools.add_albumart, args=(input_title + '.mp3', song_title, albumart))
+    p2 = Process(target=musictools.add_metadata, args=(input_title + '.mp3', song_title, artist, album))
+    p1.join()
+    p2.join()
+    album_src = p1.get()
+    p1.close()
+    p2.close()
 
     result = {
         'artist': artist,
@@ -159,13 +169,8 @@ def download_song(input_title, input_url):
         'art': album_src,
     } # Details to display on webpage
 
-    v = Visit.query.first()
-    v.count += 1             # Increment number of downloaded songs
-    v.song_name = '{} - {}'.format(artist, song_title) 
-    db.session.commit()
 
-
-    return input_title + '.mp3', song_title, result
+    return input_title + '.mp3', result
 
 
 if __name__ == '__main__':
