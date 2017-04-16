@@ -1,2 +1,2 @@
-web: gunicorn --log-file=- deploy:app --capture-output= True
+web: gunicorn --log-level=DEBUG --log-file=- deploy:app
 
