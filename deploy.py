@@ -152,7 +152,7 @@ def download_song(input_title, input_url):
     p2.start()
     p1.join()
     p2.join()
-    artist, album, song_title, albumart = p2.get()
+    artist, album, song_title, albumart = p2.values()
     p1.close()
     p2.close()
 
@@ -162,7 +162,7 @@ def download_song(input_title, input_url):
     p2.start()
     p1.join()
     p2.join()
-    album_src = p1.get()
+    album_src = p1.values()
     p1.close()
     p2.close()
 
