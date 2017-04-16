@@ -142,7 +142,7 @@ def download_song(input_title, input_url):
     artist, album, song_title, albumart = musictools.get_metadata(input_title)
     app.logger.info('Fetched Metadata')
     album_src = musictools.add_albumart(input_title + '.mp3', song_title, albumart)
-    app.loger.info('Added album art')
+    app.logger.info('Added album art')
     musictools.add_metadata(input_title + '.mp3', song_title, artist, album)
     app.logger.info('Added metadata')
 
