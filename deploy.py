@@ -152,7 +152,7 @@ def download_song(input_title, input_url):
     """
     
     pool = Pool()
-    p1 = pool.apply_async(musictools.download_song,args=(input_url, input_title, dl_directory='tmp/',))
+    p1 = pool.apply_async(musictools.download_song,args=(input_url, input_title), kwds={'dl_directory':'tmp/'})
     p2 = pool.apply_async(musictools.get_metadata, args=(input_title,))
     artist, album, song_title, albumart = p2.get(timeout=20)
     album_src = musictools.add_albumart(input_title + '.mp3', song_title, albumart)
