@@ -94,10 +94,21 @@ def process():
 
     input_title = request.form['title']
     input_url = request.form['url']
-    file_path, song_title, result = download_song(input_title, input_url)
+    file_path, result = download_song(input_title, input_url)
+
+    @after_this_request
+    def write_to_db(response):
+        v = Visit.query.first()
+        v.count += 1             # Increment number of downloaded songs
+        v.song_name = '{} - {}'.format(result['artist'], result['song'])
+        db.session.commit()
+
+        return response
 
 
-    return render_template('process.html', path=file_path, song=song_title, result=result)
+
+
+    return render_template('process.html', path=file_path, result=result)
 
 
 @app.route('/download/<path>/<song>/', methods=['POST', 'GET'])
@@ -140,17 +151,9 @@ def download_song(input_title, input_url):
     """
 
     musictools.download_song(input_url, input_title, dl_directory='tmp/')
-    print('Song Downloaded')
-    sys.stdout.flush()
     artist, album, song_title, albumart = musictools.get_metadata(input_title)
-    print('Fetched Metadata')
-    sys.stdout.flush()
     album_src = musictools.add_albumart(input_title + '.mp3', song_title, albumart)
-    print('Added album art')
-    sys.stdout.flush()
     musictools.add_metadata(input_title + '.mp3', song_title, artist, album)
-    print('Added metadata')
-    sys.stdout.flush()
 
     result = {
         'artist': artist,
@@ -159,13 +162,8 @@ def download_song(input_title, input_url):
         'art': album_src,
     } # Details to display on webpage
 
-    v = Visit.query.first()
-    v.count += 1             # Increment number of downloaded songs
-    v.song_name = '{} - {}'.format(artist, song_title) 
-    db.session.commit()
 
-
-    return input_title + '.mp3', song_title, result
+    return input_title + '.mp3', result
 
 
 if __name__ == '__main__':
