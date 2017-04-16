@@ -148,6 +148,8 @@ def download_song(input_title, input_url):
     
     p1 = Process(target=musictools.download_song,args=(input_url, input_title), kwargs={'dl_directory':'tmp/'})
     p2 = Process(target=musictools.get_metadata, args=(input_title,))
+    p1.start()
+    p2.start()
     p1.join()
     p2.join()
     artist, album, song_title, albumart = p2.get()
@@ -156,6 +158,8 @@ def download_song(input_title, input_url):
 
     p1 = Process(target=musictools.add_albumart, args=(input_title + '.mp3', song_title, albumart))
     p2 = Process(target=musictools.add_metadata, args=(input_title + '.mp3', song_title, artist, album))
+    p1.start()
+    p2.start()
     p1.join()
     p2.join()
     album_src = p1.get()
