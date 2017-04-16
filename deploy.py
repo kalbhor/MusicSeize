@@ -25,7 +25,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, \
                   url_for, send_file, after_this_request
 from logging import StreamHandler
-from multiprocessing import Process
+from multiprocessing import Pool
 
 file_handler = StreamHandler()
 file_handler.setLevel(logging.WARNING)
@@ -150,12 +150,11 @@ def download_song(input_title, input_url):
     'tmp/' is a location where heroku allows storage for a single request.
     (tmp cannot be used for permanent storage)
     """
-
-    p1 = Process(musictools.download_song,args=(input_url, input_title, 'tmp/',))
-    p2 = Process(musictools.get_metadata, args=(input_title,))
-    p1.join()
-    p2.join()
-    artist, album, song_title, albumart = p2.get()
+    
+    pool = Pool()
+    p1 = pool.apply_async(musictools.download_song,args=(input_url, input_title, 'tmp/',))
+    p2 = pool.apply_async(musictools.get_metadata, args=(input_title,))
+    artist, album, song_title, albumart = p2.get(timeout=20)
     album_src = musictools.add_albumart(input_title + '.mp3', song_title, albumart)
     musictools.add_metadata(input_title + '.mp3', song_title, artist, album)
 
