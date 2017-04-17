@@ -105,6 +105,8 @@ def process():
         v.song_name = '{} - {}'.format(result['artist'], result['song']) 
         db.session.commit()
 
+        return response
+
     return render_template('process.html', path=file_path, result=result)
 
 
