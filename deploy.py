@@ -134,6 +134,13 @@ def about():
     """
     return render_template('about.html')
 
+@app.route('/help')
+def help():
+    """
+    As the name suggests, a standard help page 
+    """
+    return render_template('help.html')
+
 
 ##########################################################################
 ########################## Download Methods ##############################
