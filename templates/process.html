@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <h1 style="text-align: center;"><u>Ready for download</u></h1>
+    <br />
+
+    <h2 style="text-align: center;">
+    Album : {{ result['album'] }}<br>
+    Song : {{ result['song'] }}<br>
+    Artist : {{ result['artist'] }}
+    </h2>
+
+    <p style="text-align: center;">
+    <img src="{{ result['art'] }}" style="max-height: 200px;" />
+    </p>
+
+
+<form style="text-align: center;"; action="{{ url_for('download',path=path,song=result['song']) }}" method="get">
+    <input style="height: 60px;width: 200px;" type="submit" value="Download" name="Submit" id="frm1_submit" />
+</form>
+<br />
+<p style="text-align: center;">
+<a href="{{ url_for('index') }}">Download another song</a>
+</p>
+
+
+
+{% endblock %}
+
+
+
+

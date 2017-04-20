@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div style="width:275px; margin:0 auto;">
+<ul style="list-style: none;">
+        <li style="display: inline-block";><a href="{{ url_for('about') }}"><u>About</u></a> •</li>
+        <li style="display: inline-block";><a href="{{ url_for('index') }}"><u>Contribute</u></a> •</li>
+        <li style="display: inline-block";><a href="{{ url_for('help') }}"><u>Help</u></a></li>
+</ul>
+</div>
+<hr />
+<br />
+<h1 style="text-align: center";><i>MusicSeize</i></h1>
+<form style="text-align: center;";  method="post" action="{{ url_for('songlist') }}" id="form1">
+<input style="height: 40px;width: 400px;";  type="text" name="songname" placeholder="Search music.." />
+<button style="text-align: center"; type="submit" form="form1" value="Submit">Search</button>
+</form>	
+
+{% if song_name and count %}
+<p style="text-align: center";>Downloads till date : <b>{{ count }}</b> <br />
+Last song downloaded : <b>{{ song_name }}</b></p>
+{% endif %}
+
+<br />
+<p style="text-align: center";><b>Attention</b> : musicnow.herokuapp.com is changing it's name to  <strong>MusicSeize.com</strong> soon</p>
+{% endblock %}
+

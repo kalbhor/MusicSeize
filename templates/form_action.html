@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block javascript %}
+
+
+
+{% endblock %}
+
+{% block content %}
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $('#trigger').click(function(){
+            $("#content").hide();
+            $("#loading").show();
+    });
+});
+</script>
+<div id="content" >
+<br><h1 style="text-align: center;">Choose your song..</h1><br><br>
+<div style=" width: 50%;
+  margin: 0 auto;">
+  <form method="post" action="{{ url_for('process') }}" id="form2">
+    {% for url,song in youtube_list %}
+    	<h4><input type="radio" name="title" value="{{ song }}">{{' ' + song}}</input></h4>
+    	<input type="hidden" name="url" value="{{ url }}" />
+      <!--<iframe width="250" height="32" src="{{ url.replace('watch?v=','embed/') }}?modestbranding=1&autohide=1&showinfo=0" frameborder="0" allowfullscreen></iframe>-->
+   {% endfor %}
+  </form>
+</div>
+   <br><br>
+<p style="text-align: center;">
+<button style="height: 60px;width: 200px;" id="trigger" type="submit" form="form2" value="Submit">Process!</button>
+</p>
+<br><br>
+</div>	
+
+
+{% endblock %}
+
+{% block load %}
+    <div id="loading" style="display: none;">
+	<h1 style="text-align: center;"> Please wait, seizing the music...</h1>
+	<br>
+<p style="text-align: center;">
+<img src="{{ url_for('static',filename='images/loading.gif') }}" style="height:60px;"" />
+</p>
+</div>
+{% endblock %}
