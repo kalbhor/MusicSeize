@@ -6,17 +6,21 @@
     <br />
 
     <h2 style="text-align: center;">
+    {% if result['album'] and result['artist'] %}
     Album : {{ result['album'] }}<br>
-    Song : {{ result['song'] }}<br>
-    Artist : {{ result['artist'] }}
+    Artist : {{ result['artist'] }}<br>
+    {% endif %}
+    Title : {{ result['title'] }}
     </h2>
 
+    {% if result['art'] %}
     <p style="text-align: center;">
     <img src="{{ result['art'] }}" style="max-height: 200px;" />
     </p>
+    {% endif %}
 
 
-<form style="text-align: center;"; action="{{ url_for('download',path=path,song=result['song']) }}" method="get">
+<form style="text-align: center;"; action="{{ url_for('download',path=path,title=result['title']) }}" method="get">
     <input style="height: 60px;width: 200px;" type="submit" value="Download" name="Submit" id="frm1_submit" />
 </form>
 <br />
