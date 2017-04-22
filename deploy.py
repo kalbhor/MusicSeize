@@ -22,8 +22,8 @@ import binascii
 from musictools import musictools
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, \
-                  url_for, send_file, abort, \
-                  after_this_request
+    url_for, send_file, abort, \
+    after_this_request
 
 ##########################################################################
 ############################# Configurations #############################
@@ -37,16 +37,17 @@ file_handler = logging.StreamHandler()
 file_handler.setLevel(logging.WARNING)
 app.logger.addHandler(file_handler)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL'] 
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-EXT = 'mp3' # File extension
+EXT = 'mp3'  # File extension
 
 ##########################################################################
 ############################# Database ###################################
 ##########################################################################
 
 db = SQLAlchemy(app)
+
 
 class Visit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -68,7 +69,7 @@ def index():
     and searches song on youtube.com
     """
 
-    v = Visit.query.first() # Get last downloaded song
+    v = Visit.query.first()  # Get last downloaded song
 
     return render_template('index.html', count=v.count, song_name=v.song_name)
 
@@ -84,10 +85,11 @@ def songlist():
 
     song_name = request.form['songname']
 
-    if song_name == '': # If user submits form without input
+    if song_name == '':  # If user submits form without input
         abort(400)
 
-    youtube_list = musictools.get_song_urls(song_name) # youtube_list is an ordered dict
+    youtube_list = musictools.get_song_urls(
+        song_name)  # youtube_list is an ordered dict
 
     return render_template('form_action.html', youtube_list=youtube_list[:5])
 
@@ -116,7 +118,7 @@ def process():
         v = Visit.query.first()
         v.count += 1             # Increment number of downloaded songs
         if result['artist']:
-            v.song_name = '{} - {}'.format(result['artist'], result['title']) 
+            v.song_name = '{} - {}'.format(result['artist'], result['title'])
         else:
             v.song_name = '{}'.format(result['title'])
         db.session.commit()
@@ -134,12 +136,12 @@ def download(path=None, title=None):
     respond)
     """
 
-    @after_this_request # Delete music file after request
+    @after_this_request  # Delete music file after request
     def delete_file(response):
-        os.remove(os.path.join('tmp',path))
+        os.remove(os.path.join('tmp', path))
         return response
 
-    return send_file(os.path.join('tmp',path), as_attachment=True, attachment_filename='{}.{}'.format(title, EXT))
+    return send_file(os.path.join('tmp', path), as_attachment=True, attachment_filename='{}.{}'.format(title, EXT))
 
 
 @app.route('/about')
@@ -150,12 +152,14 @@ def about():
     """
     return render_template('about.html')
 
+
 @app.route('/help')
 def help():
     """
     As the name suggests, a standard help page 
     """
     return render_template('help.html')
+
 
 @app.route('/caution')
 def caution():
@@ -180,30 +184,28 @@ def download_song(input_title, input_url):
     file_path = 'tmp/{}'.format(input_title)
     metadata = []
 
-
-    musictools.download_song(input_url, file_path) # No need for ext here, download_song does that automatically
-    try: 
+    # No need for ext here, download_song does that automatically
+    musictools.download_song(input_url, file_path)
+    try:
         metadata = musictools.get_metadata(input_title)
     except IndexError:
-        metadata = [None , None, input_title, None]
+        metadata = [None, None, input_title, None]
         print('Metadata search failed for {}'.format(input_title))
         sys.stdout.flush()
     else:
-        musictools.add_metadata('{}.{}'.format(file_path,EXT), metadata[2], metadata[0], metadata[1])
-        musictools.add_album_art('{}.{}'.format(file_path,EXT), metadata[3])
-
+        musictools.add_metadata('{}.{}'.format(
+            file_path, EXT), metadata[2], metadata[0], metadata[1])
+        musictools.add_album_art('{}.{}'.format(file_path, EXT), metadata[3])
 
     result = {
         'artist': metadata[0],
-        'album' : metadata[1],
-        'title' : metadata[2],
+        'album': metadata[1],
+        'title': metadata[2],
         'art': metadata[3],
-    } # Details to display on webpage
+    }  # Details to display on webpage
 
-
-    return '{}.{}'.format(input_title,EXT), result
+    return '{}.{}'.format(input_title, EXT), result
 
 
 if __name__ == '__main__':
-    app.run(debug=True) # For locally running the application
-
+    app.run(debug=True)  # For locally running the application

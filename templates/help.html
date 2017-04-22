@@ -1,20 +1,14 @@
 {% extends "layout.html" %}
-
 {% block content %}
-    <h1 style="text-align: center";><u>Help</u></h1><br>
-
+<h1 style="text-align: center";><u>Help</u></h1>
+<br>
 <div style="width:800px; margin:0 auto;">
-  <ul>
-    <li>If you're not getting correct metadata, choose song with no unnecessary words like 'lyrics', 'HD'</li>
-    <li>If your song is regional, metadata might not be accurate</li>
-    <li>If your song is lengthy, it might take more time to process it</li>
-    <li>If you get stuck on processing, try clearing your cache</li>
-  </ul>
+    <ul>
+        <li>If you're not getting correct metadata, choose song with no unnecessary words like 'lyrics', 'HD'</li>
+        <li>If your song is regional, metadata might not be accurate</li>
+        <li>If your song is lengthy, it might take more time to process it</li>
+        <li>If you get stuck on processing, try clearing your cache</li>
+    </ul>
 </div>
-
-    <p style="text-align: center";><a href="{{ url_for('index') }}"><u>Back to main page</u></a></p>
-
+<p style="text-align: center";><a href="{{ url_for('index') }}"><u>Back to main page</u></a></p>
 {% endblock %}
-
-
-
