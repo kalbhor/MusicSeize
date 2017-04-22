@@ -141,6 +141,13 @@ def help():
     """
     return render_template('help.html')
 
+@app.route('/caution')
+def caution():
+    """
+    As the name suggests, a standard help page 
+    """
+    return render_template('caution.html')
+
 
 ##########################################################################
 ########################## Download Methods ##############################
