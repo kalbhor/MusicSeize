@@ -23,7 +23,7 @@ from musictools import musictools
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, \
     url_for, send_file, abort, \
-    after_this_request
+    after_this_request, make_response
 
 ##########################################################################
 ############################# Configurations #############################
@@ -136,6 +136,7 @@ def download(path=None, title=None):
     respond)
     """
 
+
     @after_this_request  # Delete music file after request
     def delete_file(response):
         os.remove(os.path.join('tmp', path))
@@ -143,7 +144,10 @@ def download(path=None, title=None):
 
     print(os.path.join('tmp', path))
     sys.stdout.flush()
-    return send_file(os.path.join('tmp', path), as_attachment=True, attachment_filename='{}.{}'.format(title, EXT))
+
+    response = make_response(send_file(os.path.join('tmp', path), as_attachment=True, attachment_filename='{}.{}'.format(title, EXT)))
+    return response
+    # return send_file(os.path.join('tmp', path), as_attachment=True, attachment_filename='{}.{}'.format(title, EXT))
 
 
 @app.route('/about')
