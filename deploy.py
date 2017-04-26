@@ -141,6 +141,8 @@ def download(path=None, title=None):
         os.remove(os.path.join('tmp', path))
         return response
 
+    print(os.path.join('tmp', path))
+    sys.stdout.flush()
     return send_file(os.path.join('tmp', path), as_attachment=True, attachment_filename='{}.{}'.format(title, EXT))
 
 
