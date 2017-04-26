@@ -146,6 +146,8 @@ def download(path=None, title=None):
     sys.stdout.flush()
 
     response = make_response(send_file(os.path.join('tmp', path), as_attachment=True, attachment_filename='{}.{}'.format(title, EXT)))
+    print('Download succesful')
+    sys.stdout.flush()
     return response
     # return send_file(os.path.join('tmp', path), as_attachment=True, attachment_filename='{}.{}'.format(title, EXT))
 
