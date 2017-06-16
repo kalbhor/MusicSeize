@@ -1,21 +1,24 @@
-appdirs==1.4.3
-beautifulsoup4==4.5.3
-bs4==0.0.1
-click==6.7
-Flask==0.12
-Flask-SQLAlchemy==2.2
-gunicorn==19.6.0
-itsdangerous==0.24
-Jinja2==2.9.5
-MarkupSafe==0.23
-musictools==2.1.4
-mutagen==1.37
-packaging==16.8
-psycopg2==2.7.1
-pyparsing==2.1.10
-requests==2.13.0
-six==1.10.0
-spotipy==2.4.4
-SQLAlchemy==1.1.9
-Werkzeug==0.11.15
-youtube-dl==2017.5.9
+appdirs (1.4.3)
+beautifulsoup4 (4.5.3)
+bs4 (0.0.1)
+click (6.7)
+Flask (0.12)
+Flask-SQLAlchemy (2.2)
+gunicorn (19.6.0)
+itsdangerous (0.24)
+Jinja2 (2.9.5)
+MarkupSafe (0.23)
+musictools (2.1.4)
+mutagen (1.37)
+packaging (16.8)
+pip (9.0.1)
+psycopg2 (2.7.1)
+pyparsing (2.1.10)
+requests (2.13.0)
+setuptools (35.0.1)
+six (1.10.0)
+spotipy (2.4.4)
+SQLAlchemy (1.1.9)
+Werkzeug (0.11.15)
+wheel (0.29.0)
+youtube-dl (2017.6.12)
