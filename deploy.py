@@ -32,15 +32,15 @@ from flask import Flask, render_template, request, \
 app = Flask(__name__)
 
 app.secret_key = binascii.hexlify(os.urandom(24))
-CLIENT_ID = os.environ('SPOTIFY_CLIENT_ID')
-CLIENT_SECRET = os.envron('SPOTIFY_CLIENT_SECRET')
-
 file_handler = logging.StreamHandler()
 file_handler.setLevel(logging.WARNING)
 app.logger.addHandler(file_handler)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+CLIENT_ID = os.environ['SPOTIFY_CLIENT_ID']
+CLIENT_SECRET = os.envron['SPOTIFY_CLIENT_SECRET']
+
 
 EXT = 'mp3'  # File extension
 
