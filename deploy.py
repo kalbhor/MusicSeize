@@ -32,6 +32,8 @@ from flask import Flask, render_template, request, \
 app = Flask(__name__)
 
 app.secret_key = binascii.hexlify(os.urandom(24))
+CLIENT_ID = os.environ('SPOTIFY_CLIENT_ID')
+CLIENT_SECRET = os.envron('SPOTIFY_CLIENT_SECRET')
 
 file_handler = logging.StreamHandler()
 file_handler.setLevel(logging.WARNING)
@@ -195,7 +197,7 @@ def download_song(input_title, input_url):
     # No need for ext here, download_song does that automatically
     musictools.download_song(input_url, file_path)
     try:
-        metadata = musictools.get_metadata(input_title)
+        metadata = musictools.get_metadata(input_title, CLIENT_ID, CLIENT_SECRET)
     except IndexError:
         metadata = [None, None, input_title, None]
         print('Metadata search failed for {}'.format(input_title))
