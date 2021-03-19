@@ -9,7 +9,7 @@ Flask-SQLAlchemy==2.2
 gunicorn==19.6.0
 idna==2.6
 itsdangerous==0.24
-Jinja2==2.9.5
+Jinja2==2.11.3
 MarkupSafe==0.23
 musictools==2.2.0
 mutagen==1.39
